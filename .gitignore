@@ -1,0 +1,51 @@
+# Build artifacts
+/target/
+debug/
+release/
+
+# Cargo lock (optional - keep for binaries, ignore for libraries)
+# Cargo.lock
+
+# Backup files
+*.bak
+*.orig
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.*.sw?
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*
+
+# Logs
+*.log
+
+# Generated documentation
+/doc/
+
+# Profiling
+*.profraw
+*.profdata
+perf.data
+perf.data.old
+
+# Coverage
+*.gcno
+*.gcda
+*.gcov
+lcov.info
+tarpaulin-report.html
+coverage/
+
+# Rustfmt backup
+*.rs.bk
