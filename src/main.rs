@@ -375,9 +375,26 @@ async fn main() {
     let mongodb_database = std::env::var("MONGODB_DATABASE")
         .unwrap_or_else(|_| "mental_chatbot".to_string());
     
-    let db = AppDatabase::connect(&mongodb_uri, &mongodb_database)
-        .await
-        .expect("Failed to connect to MongoDB");
+    // Connect to MongoDB with retry logic
+    let mut db = None;
+    let max_retries = 5;
+    for i in 1..=max_retries {
+        match AppDatabase::connect(&mongodb_uri, &mongodb_database).await {
+            Ok(database) => {
+                db = Some(database);
+                break;
+            }
+            Err(e) => {
+                if i == max_retries {
+                    tracing::error!("Failed to connect to MongoDB after {} attempts: {}", max_retries, e);
+                    panic!("Failed to connect to MongoDB: {}", e);
+                }
+                tracing::warn!("Failed to connect to MongoDB (attempt {}/{}): {}. Retrying in 5s...", i, max_retries, e);
+                tokio::time::sleep(tokio::time::Duration::from_secs(5)).await;
+            }
+        }
+    }
+    let db = db.expect("Failed to connect to MongoDB");
 
     // Create embedding service
     let embedding_service = EmbeddingService::new(openrouter_api_key);

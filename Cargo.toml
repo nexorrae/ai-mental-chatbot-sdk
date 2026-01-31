@@ -16,7 +16,7 @@ reqwest = { version = "0.12", features = ["json"] }
 dotenvy = "0.15"
 
 # MongoDB
-mongodb = "3.1"
+mongodb = "3.2"
 futures = "0.3"
 
 # Utils
