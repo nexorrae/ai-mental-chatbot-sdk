@@ -113,6 +113,7 @@ MongoDB (Data)
 - Clarity over speed
 
 
+
 # Ethics & Safety – AI Mental Health Chatbot
 
 This document outlines the ethical principles, safety boundaries, and user protection standards for the AI Mental Health Chatbot.
