@@ -16,6 +16,7 @@ pub struct KnowledgeDocument {
 
 /// Conversation message for history tracking
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[allow(dead_code)]
 pub struct ConversationMessage {
     pub role: String,
     pub content: String,
@@ -25,6 +26,7 @@ pub struct ConversationMessage {
 /// MongoDB database wrapper
 #[derive(Clone)]
 pub struct AppDatabase {
+    #[allow(dead_code)]
     pub client: Client,
     pub db: Database,
 }

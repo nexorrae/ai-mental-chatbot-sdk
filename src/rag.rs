@@ -8,6 +8,7 @@ pub struct RetrievedDocument {
     pub content: String,
     pub title: String,
     pub category: String,
+    #[allow(dead_code)]
     pub similarity: f64,
 }
 
