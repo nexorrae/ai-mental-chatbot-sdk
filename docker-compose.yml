@@ -1,0 +1,43 @@
+services:
+  # Rust Backend API
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-mental-chatbot-backend
+    restart: unless-stopped
+    ports:
+      - "${BACKEND_PORT:-3000}:3000"
+    environment:
+      - RUST_LOG=${RUST_LOG:-info}
+    networks:
+      - backend-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Nginx Reverse Proxy (optional for SSL termination)
+  nginx:
+    image: nginx:alpine
+    container_name: ai-mental-chatbot-backend-nginx
+    restart: unless-stopped
+    ports:
+      - "${NGINX_PORT:-80}:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - backend-network
+    depends_on:
+      - backend
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/nginx-health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  backend-network:
+    driver: bridge
