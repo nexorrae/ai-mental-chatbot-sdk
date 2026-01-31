@@ -10,7 +10,18 @@ echo "🌱 Seeding knowledge base..."
 # Check if jq is installed
 if ! command -v jq &> /dev/null; then
     echo "Error: jq is required but not installed."
-    echo "Install with: brew install jq"
+    echo "Install with:"
+    echo "  MacOS:  brew install jq"
+    echo "  Ubuntu: sudo apt-get install jq"
+    exit 1
+fi
+
+# Check if curl is installed
+if ! command -v curl &> /dev/null; then
+    echo "Error: curl is required but not installed."
+    echo "Install with:"
+    echo "  MacOS:  brew install curl"
+    echo "  Ubuntu: sudo apt-get install curl"
     exit 1
 fi
 
