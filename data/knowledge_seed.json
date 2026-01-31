@@ -1,0 +1,42 @@
+[
+    {
+        "title": "Teknik Pernapasan untuk Menenangkan Pikiran",
+        "content": "Teknik pernapasan 4-7-8 adalah metode yang efektif untuk menenangkan pikiran dan mengurangi kecemasan. Caranya: tarik napas melalui hidung selama 4 detik, tahan napas selama 7 detik, lalu hembuskan perlahan melalui mulut selama 8 detik. Ulangi 3-4 kali. Teknik ini membantu mengaktifkan sistem saraf parasimpatik yang membuat tubuh rileks.",
+        "category": "coping-techniques"
+    },
+    {
+        "title": "Journaling untuk Kesehatan Mental",
+        "content": "Menulis jurnal secara rutin dapat membantu mengurangi stres dan kecemasan. Beberapa tips journaling: 1) Tulis tanpa filter - jangan khawatir tentang tata bahasa, 2) Fokus pada perasaan, bukan hanya kejadian, 3) Coba teknik stream of consciousness - tulis apapun yang muncul di pikiran, 4) Luangkan waktu 5-10 menit setiap hari. Journaling membantu mengeksternalisasi perasaan sehingga lebih mudah diproses.",
+        "category": "self-help"
+    },
+    {
+        "title": "Mengenali Tanda-tanda Burnout",
+        "content": "Burnout adalah kondisi kelelahan fisik dan emosional akibat stres berkepanjangan. Tanda-tandanya meliputi: kelelahan yang tidak hilang meski sudah istirahat, merasa sinis atau negatif tentang pekerjaan, produktivitas menurun, sulit berkonsentrasi, dan masalah tidur. Jika mengalami gejala ini, penting untuk mengambil langkah seperti berbicara dengan orang terpercaya, menetapkan batasan, dan mencari bantuan profesional jika diperlukan.",
+        "category": "awareness"
+    },
+    {
+        "title": "Grounding Technique 5-4-3-2-1",
+        "content": "Teknik grounding 5-4-3-2-1 membantu menenangkan pikiran saat merasa overwhelmed atau cemas. Caranya: identifikasi 5 hal yang bisa kamu lihat, 4 hal yang bisa kamu sentuh, 3 hal yang bisa kamu dengar, 2 hal yang bisa kamu cium, dan 1 hal yang bisa kamu rasakan (taste). Teknik ini membantu membawa perhatian kembali ke saat ini dan mengurangi kecemasan.",
+        "category": "coping-techniques"
+    },
+    {
+        "title": "Pentingnya Tidur untuk Kesehatan Mental",
+        "content": "Tidur yang cukup sangat penting untuk kesehatan mental. Kurang tidur dapat memperburuk gejala kecemasan dan depresi. Tips untuk tidur lebih baik: 1) Tetapkan jadwal tidur yang konsisten, 2) Hindari layar gadget 1 jam sebelum tidur, 3) Ciptakan lingkungan tidur yang nyaman dan gelap, 4) Hindari kafein setelah jam 2 siang, 5) Lakukan aktivitas relaksasi sebelum tidur seperti membaca atau meditasi.",
+        "category": "wellness"
+    },
+    {
+        "title": "Self-Compassion: Menyayangi Diri Sendiri",
+        "content": "Self-compassion adalah kemampuan untuk bersikap baik pada diri sendiri, terutama saat menghadapi kesulitan. Tiga komponen self-compassion: 1) Self-kindness - berbicara pada diri sendiri dengan lembut seperti berbicara pada teman, 2) Common humanity - mengingat bahwa semua orang mengalami kesulitan, 3) Mindfulness - mengakui perasaan tanpa menghakimi. Latih self-compassion dengan bertanya: 'Apa yang akan kukatakan pada teman yang mengalami hal ini?'",
+        "category": "self-help"
+    },
+    {
+        "title": "Kapan Harus Mencari Bantuan Profesional",
+        "content": "Penting untuk mencari bantuan profesional jika: 1) Perasaan sedih atau cemas berlangsung lebih dari 2 minggu, 2) Kesulitan menjalankan aktivitas sehari-hari, 3) Memiliki pikiran untuk menyakiti diri sendiri, 4) Menggunakan alkohol atau zat lain untuk mengatasi perasaan, 5) Perubahan drastis dalam pola tidur atau makan. Di Indonesia, kamu bisa menghubungi: Into The Light (119 ext 8), Yayasan Pulih (021-788-42580), atau kunjungi psikolog/psikiater terdekat.",
+        "category": "resources"
+    },
+    {
+        "title": "Mindfulness untuk Pemula",
+        "content": "Mindfulness adalah praktik hadir sepenuhnya di saat ini tanpa menghakimi. Cara memulai: 1) Duduk nyaman dan fokus pada napas, 2) Perhatikan sensasi napas masuk dan keluar, 3) Saat pikiran mengembara (ini normal!), kembalikan perhatian ke napas dengan lembut, 4) Mulai dengan 5 menit sehari. Manfaat mindfulness termasuk mengurangi stres, meningkatkan fokus, dan membantu mengelola emosi dengan lebih baik.",
+        "category": "wellness"
+    }
+]

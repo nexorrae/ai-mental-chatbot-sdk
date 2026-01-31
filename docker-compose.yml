@@ -1,4 +1,27 @@
 services:
+  # MongoDB Database
+  mongodb:
+    image: mongo:7
+    container_name: ai-mental-chatbot-mongodb
+    restart: unless-stopped
+    ports:
+      - "${MONGODB_PORT:-27017}:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME:-admin}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD:-password123}
+      - MONGO_INITDB_DATABASE=${MONGODB_DATABASE:-mental_chatbot}
+    volumes:
+      - mongodb_data:/data/db
+      - ./scripts/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - backend-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
   # Rust Backend API
   backend:
     build:
@@ -10,8 +33,15 @@ services:
       - "${BACKEND_PORT:-3000}:3000"
     environment:
       - RUST_LOG=${RUST_LOG:-info}
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+      - OPENROUTER_MODEL=${OPENROUTER_MODEL:-openai/gpt-4o-mini}
+      - MONGODB_URI=mongodb://${MONGO_ROOT_USERNAME:-admin}:${MONGO_ROOT_PASSWORD:-password123}@mongodb:27017/${MONGODB_DATABASE:-mental_chatbot}?authSource=admin
+      - MONGODB_DATABASE=${MONGODB_DATABASE:-mental_chatbot}
     networks:
       - backend-network
+    depends_on:
+      mongodb:
+        condition: service_healthy
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
       interval: 30s
@@ -19,7 +49,7 @@ services:
       retries: 3
       start_period: 40s
 
-  # Nginx Reverse Proxy (optional for SSL termination)
+  # Nginx Reverse Proxy
   nginx:
     image: nginx:alpine
     container_name: ai-mental-chatbot-backend-nginx
@@ -37,6 +67,10 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+
+volumes:
+  mongodb_data:
+    driver: local
 
 networks:
   backend-network:
