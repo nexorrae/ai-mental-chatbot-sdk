@@ -17,6 +17,8 @@ use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 use tower_http::cors::{Any, CorsLayer};
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
+use utoipa::{OpenApi, ToSchema};
+use utoipa_swagger_ui::SwaggerUi;
 use uuid::Uuid;
 
 // ===== Configuration =====
@@ -33,20 +35,22 @@ struct AppState {
 }
 
 // ===== Request/Response Types =====
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, ToSchema)]
 struct HealthResponse {
     status: String,
     message: String,
 }
 
-#[derive(Debug, Deserialize)]
-struct ChatRequest {
+#[derive(Debug, Deserialize, ToSchema)]
+pub struct ChatRequest {
+    #[schema(example = "Halo, saya merasa cemas")]
     message: String,
     #[serde(default)]
+    #[schema(default)]
     conversation_history: Vec<Message>,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, ToSchema)]
 struct ChatResponse {
     response: String,
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -55,20 +59,22 @@ struct ChatResponse {
     sources: Option<Vec<String>>,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
-struct Message {
+#[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
+pub struct Message {
+    #[schema(example = "user")]
     role: String,
+    #[schema(example = "saya merasa cemas")]
     content: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, ToSchema)]
 struct IngestRequest {
     title: String,
     content: String,
     category: String,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, ToSchema)]
 struct IngestResponse {
     success: bool,
     id: String,
@@ -129,7 +135,29 @@ const SYSTEM_PROMPT: &str = r#"You are a compassionate mental wellness companion
 
 Remember: You are a mirror for reflection, not a problem-solver. Help users discover their own insights."#;
 
+// ===== ApiDoc =====
+#[derive(OpenApi)]
+#[openapi(
+    paths(health_check, chat, ingest_document),
+    components(
+        schemas(HealthResponse, ChatRequest, ChatResponse, Message, IngestRequest, IngestResponse)
+    ),
+    tags(
+        (name = "ai-mental-chatbot", description = "AI Mental Chatbot Backend API")
+    )
+)]
+struct ApiDoc;
+
 // ===== Handlers =====
+
+/// Health check endpoint
+#[utoipa::path(
+    get,
+    path = "/health",
+    responses(
+        (status = 200, description = "Server is healthy", body = HealthResponse)
+    )
+)]
 async fn health_check(State(state): State<Arc<AppState>>) -> impl IntoResponse {
     // Check MongoDB connection
     let db_status = match state.db.ping().await {
@@ -143,6 +171,17 @@ async fn health_check(State(state): State<Arc<AppState>>) -> impl IntoResponse {
     })
 }
 
+/// Chat with AI
+#[utoipa::path(
+    post,
+    path = "/api/chat",
+    request_body = ChatRequest,
+    responses(
+        (status = 200, description = "Chat response", body = ChatResponse),
+        (status = 400, description = "Bad request", body = ChatResponse),
+        (status = 500, description = "Internal server error")
+    )
+)]
 async fn chat(
     State(state): State<Arc<AppState>>,
     Json(payload): Json<ChatRequest>,
@@ -273,7 +312,16 @@ async fn chat(
     }
 }
 
-/// Ingest a new document into the knowledge base
+/// Ingest a document
+#[utoipa::path(
+    post,
+    path = "/api/ingest",
+    request_body = IngestRequest,
+    responses(
+        (status = 201, description = "Document ingested", body = IngestResponse),
+        (status = 400, description = "Bad request", body = IngestResponse)
+    )
+)]
 async fn ingest_document(
     State(state): State<Arc<AppState>>,
     Json(payload): Json<IngestRequest>,
@@ -414,6 +462,7 @@ async fn main() {
 
     // Build router
     let app = Router::new()
+        .merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", ApiDoc::openapi()))
         .route("/health", get(health_check))
         .route("/api/chat", post(chat))
         .route("/api/ingest", post(ingest_document))
@@ -422,10 +471,12 @@ async fn main() {
 
     // Start server
     let port = std::env::var("PORT").unwrap_or_else(|_| "3000".to_string());
+    let port = if port.is_empty() { "3000".to_string() } else { port };
     let listener = tokio::net::TcpListener::bind(format!("0.0.0.0:{}", port))
         .await
         .unwrap();
     tracing::info!("🚀 Server running on http://localhost:{}", port);
+    tracing::info!("📜 Swagger UI available at http://localhost:{}/swagger-ui", port);
 
     axum::serve(listener, app).await.unwrap();
 }
