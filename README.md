@@ -1,4 +1,4 @@
-# Workflow – AI Mental Health Chatbot
+# Workflow – CurhatIn: AI Mental Health Chatbot
 
 This document defines the product workflow, team responsibilities, and feature boundaries for the AI Mental Health Chatbot.
 
