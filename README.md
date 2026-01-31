@@ -211,3 +211,14 @@ If uncertain, the feature **must not be released**.
   - Reject features
   - Roll back features in production
   - Update ethical standards to protect users
+
+  ## 📌 Backend Status
+
+- API endpoints are live and functional
+- Integrated with WebUI for end-to-end chat flow
+- Deployed in a non-local server environment
+- Currently using free / low-cost LLM providers for testing
+- No clinical logic or diagnosis implemented
+
+This backend is designed as a modular, non-clinical AI support engine.
+
