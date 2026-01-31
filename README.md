@@ -112,3 +112,101 @@ MongoDB (Data)
 - Safety over features
 - Clarity over speed
 
+
+# Ethics & Safety – AI Mental Health Chatbot
+
+This document outlines the ethical principles, safety boundaries, and user protection standards for the AI Mental Health Chatbot.
+
+---
+
+## 1. Product Positioning
+The AI Mental Health Chatbot is:
+- An AI-based emotional support and reflection tool
+- A companion for non-clinical mental well-being conversations
+
+The chatbot is **NOT**:
+- A psychologist or psychiatrist
+- A medical or mental health professional
+- A replacement for professional care
+
+---
+
+## 2. Core Ethical Principles
+
+### 2.1 No Diagnosis
+The AI must never:
+- Diagnose mental health conditions
+- Label users with psychological disorders
+- Provide medical conclusions
+
+---
+
+### 2.2 Safety First
+If a user expresses:
+- Self-harm intent
+- Suicidal ideation
+- Severe emotional crisis
+
+The AI must:
+- Avoid exploratory or probing dialogue
+- Respond with empathy and care
+- Encourage seeking professional or emergency help
+- Never validate or instruct harmful actions
+
+---
+
+### 2.3 Emotional Boundaries
+The AI must not:
+- Claim exclusivity or emotional dependency
+- Position itself as the user’s only support
+
+The AI should:
+- Encourage real-world support systems
+- Promote self-awareness and grounding
+
+---
+
+## 3. Data Privacy
+- No storage of:
+  - Real names
+  - Phone numbers
+  - Physical addresses
+- Data is used only for:
+  - Generating responses
+  - Limited technical debugging
+- User data is never sold or shared
+
+---
+
+## 4. Transparency
+Users must be informed that:
+- They are interacting with an AI system
+- AI responses may be imperfect
+- Third-party LLM services (via OpenRouter) are used
+
+---
+
+## 5. Prompt & Model Control
+- Prompts are designed to be:
+  - Neutral
+  - Empathetic
+  - Non-manipulative
+- No coercive, persuasive, or exploitative behavior is allowed
+
+---
+
+## 6. Ethical Feature Gate
+All new features must be evaluated against:
+1. User safety impact
+2. Risk of emotional dependency
+3. Professional boundary compliance
+
+If uncertain, the feature **must not be released**.
+
+---
+
+## 7. Ownership & Authority
+- The Ethics Owner has the authority to:
+  - Reject features
+  - Roll back features in production
+  - Update ethical standards to protect users
