@@ -101,7 +101,7 @@ struct OpenRouterMessage {
 }
 
 // ===== Mental Health System Prompt =====
-const SYSTEM_PROMPT: &str = r#"You are a compassionate mental wellness companion called MindJournal Assistant. Your role is to provide a safe space for reflection and emotional support.
+const SYSTEM_PROMPT: &str = r#"You are a compassionate mental wellness companion called Curhatin Assistant. Your role is to provide a safe space for reflection and emotional support.
 
 ## Your Approach:
 - Listen with genuine empathy and reflect back what users share
@@ -207,8 +207,8 @@ async fn chat(
         .post("https://openrouter.ai/api/v1/chat/completions")
         .header("Authorization", format!("Bearer {}", state.config.openrouter_api_key))
         .header("Content-Type", "application/json")
-        .header("HTTP-Referer", "https://mindjournal.app")
-        .header("X-Title", "MindJournal")
+        .header("HTTP-Referer", "https://Curhatin.app")
+        .header("X-Title", "Curhatin")
         .json(&openrouter_request)
         .send()
         .await;
