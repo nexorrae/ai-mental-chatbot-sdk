@@ -1,224 +1,94 @@
-# Workflow – CurhatIn: AI Mental Health Chatbot
+# CurhatIn SDK (Backend)
 
-This document defines the product workflow, team responsibilities, and feature boundaries for the AI Mental Health Chatbot.
-
----
-
-## 1. Purpose
-- Serve as a technical and product compass for development
-- Keep frontend, backend, and infrastructure aligned
-- Prevent feature creep and ethical violations
+<div align="center">
+  <h3>Privacy-First AI Mental Health Support Engine</h3>
+  <p>High-performance, stateless backend for secure and empathetic AI interactions.</p>
+</div>
 
 ---
 
-## 2. Team Responsibilities
+## 📖 Overview
 
-### Product & Ethics Owner
-**(Zavy)**
-- Write and maintain:
-  - `workflow.md`
-  - `ethics.md`
-- Define and approve feature scope
-- Review user flow and ethical risks
-- Final approval before production release
+**CurhatIn SDK** is the backend engine powering the CurhatIn platform. Built with **Rust** and **Axum**, it is designed for rapid, concurrent handling of chat sessions while maintaining strict privacy standards. This SDK abstracts the complexity of LLM interactions (via OpenRouter), data sanitation, and state management, providing a clean REST API for the frontend.
 
----
+## ✨ Features
 
-### Engineering
-**(Gilang)**
-- Repository setup and project structure
-- Frontend development (React + Vite)
-- Backend development (Rust + Axum)
-- API, database, and LLM integration
-- Deployment and server maintenance
+- **🚀 High Performance**: Built on Rust's Actix/Axum ecosystem for blazing fast response times.
+- **🔒 Privacy-First**: Stateless architecture ensures no personal identifiable information (PII) is permanently stored.
+- **🧠 Modular AI Engine**: Easily swappable LLM providers via OpenRouter integration.
+- **📄 Auto-Documentation**: Integrated Swagger/OpenAPI UI for live API testing (`/swagger-ui`).
+- **🛡️ Ethical Guardrails**: System prompts designed to prevent medical diagnosis and prioritize user safety.
 
----
+## 🛠️ Tech Stack
 
-## 3. High-Level Architecture
-User (WebUI)
-↓
-Frontend (React + Vite)
-↓ REST API
-Backend SDK (Rust + Axum)
-↓
-OpenRouter (LLM)
-MongoDB (Data)
+- **Language**: Rust
+- **Framework**: [Axum](https://github.com/tokio-rs/axum)
+- **Runtime**: Tokio
+- **Database**: MongoDB (for transient session storage, if enabled)
+- **Documentation**: Utoipa (OpenAPI)
+- **AI Provider**: OpenRouter
 
-- Frontend acts as a **UI layer only**
-- All AI logic and data processing reside in the backend
-- No LLM keys are exposed on the frontend
+## 🚀 Getting Started
 
----
+### Prerequisites
 
-## 4. Core User Flow
+- **Rust** (latest stable)
+- **Docker** & **Docker Compose**
+- **MongoDB** instance (local or Atlas)
 
-### 4.1 Onboarding
-- User accesses the WebUI
-- Clear notice that:
-  - The chatbot is **not a medical professional**
-  - It does **not replace professional mental health services**
-- User agrees before starting the chat
+### Installation
 
----
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/yourusername/ai-mental-chatbot-sdk.git
+    cd ai-mental-chatbot-sdk
+    ```
 
-### 4.2 Chat Interaction
-1. User sends a message
-2. Frontend forwards the request to the backend
-3. Backend:
-   - Validates input
-   - Retrieves context if available
-   - Sends prompt to OpenRouter
-4. AI response is returned to the frontend
-5. Frontend renders the response (Markdown supported)
+2.  **Configure Environment**
+    Copy the example configuration:
+    ```bash
+    cp .env.example .env
+    ```
+    Update the `.env` file with your credentials:
+    ```env
+    PORT=3000
+    MONGODB_URI=mongodb://localhost:27017
+    MONGODB_DATABASE=curhatin_db
+    OPENROUTER_API_KEY=your_key_here
+    OPENROUTER_MODEL=deepseek/deepseek-charter:free
+    ```
 
----
+### Running Locally
 
-### 4.3 Data Handling
-- Minimal data collection (messages and responses)
-- No explicit personal identification stored
-- User data is **not used to retrain models**
+```bash
+cargo run
+```
+The server will start at `http://localhost:3000`.
 
----
+### Running with Docker
 
-## 5. Feature Scope
+```bash
+docker build -t curhatin-sdk .
+docker run -p 3000:3000 --env-file .env curhatin-sdk
+```
 
-### In Scope
-- Text-based one-on-one chat
-- Lightweight mental health support
-- Markdown rendering
-- Technical logging (errors and performance)
+## 📚 API Documentation
 
----
+Once the server is running, you can explore the full API documentation interactively:
 
-### Out of Scope
-- Medical or psychological diagnosis
-- Clinical assessment or labeling
-- Emergency or crisis intervention
-- Voice or video interaction
+- **Swagger UI**: [http://localhost:3000/swagger-ui](http://localhost:3000/swagger-ui)
+- **OpenAPI Spec**: [http://localhost:3000/api-docs/openapi.json](http://localhost:3000/api-docs/openapi.json)
 
----
+## 🤝 Contributing
 
-## 6. Deployment Flow
-- Backend and frontend are deployed by Engineering
-- Configuration handled via environment variables
-- Production updates require:
-  - Review by Product & Ethics Owner
-  - Compliance with `ethics.md`
+We welcome contributions! Please check `docs/PRODUCT_WORKFLOW.md` (legacy context) for understanding the original project scope.
 
----
+1.  Fork the Project
+2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4.  Push to the Branch (`git push origin feature/AmazingFeature`)
+5.  Open a Pull Request
 
-## 7. Development Principles
-- Simplicity over complexity
-- Safety over features
-- Clarity over speed
+## 📄 License
 
-
-
-# Ethics & Safety – AI Mental Health Chatbot
-
-This document outlines the ethical principles, safety boundaries, and user protection standards for the AI Mental Health Chatbot.
-
----
-
-## 1. Product Positioning
-The AI Mental Health Chatbot is:
-- An AI-based emotional support and reflection tool
-- A companion for non-clinical mental well-being conversations
-
-The chatbot is **NOT**:
-- A psychologist or psychiatrist
-- A medical or mental health professional
-- A replacement for professional care
-
----
-
-## 2. Core Ethical Principles
-
-### 2.1 No Diagnosis
-The AI must never:
-- Diagnose mental health conditions
-- Label users with psychological disorders
-- Provide medical conclusions
-
----
-
-### 2.2 Safety First
-If a user expresses:
-- Self-harm intent
-- Suicidal ideation
-- Severe emotional crisis
-
-The AI must:
-- Avoid exploratory or probing dialogue
-- Respond with empathy and care
-- Encourage seeking professional or emergency help
-- Never validate or instruct harmful actions
-
----
-
-### 2.3 Emotional Boundaries
-The AI must not:
-- Claim exclusivity or emotional dependency
-- Position itself as the user’s only support
-
-The AI should:
-- Encourage real-world support systems
-- Promote self-awareness and grounding
-
----
-
-## 3. Data Privacy
-- No storage of:
-  - Real names
-  - Phone numbers
-  - Physical addresses
-- Data is used only for:
-  - Generating responses
-  - Limited technical debugging
-- User data is never sold or shared
-
----
-
-## 4. Transparency
-Users must be informed that:
-- They are interacting with an AI system
-- AI responses may be imperfect
-- Third-party LLM services (via OpenRouter) are used
-
----
-
-## 5. Prompt & Model Control
-- Prompts are designed to be:
-  - Neutral
-  - Empathetic
-  - Non-manipulative
-- No coercive, persuasive, or exploitative behavior is allowed
-
----
-
-## 6. Ethical Feature Gate
-All new features must be evaluated against:
-1. User safety impact
-2. Risk of emotional dependency
-3. Professional boundary compliance
-
-If uncertain, the feature **must not be released**.
-
----
-
-## 7. Ownership & Authority
-- The Ethics Owner has the authority to:
-  - Reject features
-  - Roll back features in production
-  - Update ethical standards to protect users
-
-  ## 📌 Backend Status
-
-- API endpoints are live and functional
-- Integrated with WebUI for end-to-end chat flow
-- Deployed in a non-local server environment
-- Currently using free / low-cost LLM providers for testing
-- No clinical logic or diagnosis implemented
-
-This backend is designed as a modular, non-clinical AI support engine.
-
+Distributed under the MIT License. See `LICENSE` for more information.
